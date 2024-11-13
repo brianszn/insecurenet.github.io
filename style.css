@@ -17,8 +17,9 @@ body {
 }
 span,li,ul {
     color: white;
-    font-family:'Courier New', Courier, monospace;
+    font-family:monospace;
     font-size: 17px;
+    font-weight: bold;
     max-width: fit-content;
 }
 pre {
@@ -37,8 +38,8 @@ a {
 #title-span {
     text-decoration: none;
     color: white;
-    font-size: medium;  
-    
+    font-size: medium;
+    font-size: 19px;
     border-radius: 5px;
     padding: 3px;
     
