@@ -33,14 +33,14 @@ span,li,ul {
 }
 pre {
     color: red;
-    font-size: xx-small;
+    font-size: 5px;
     align-items: center;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 a {
     text-decoration: none;
     color: #58d411;
-    font-size: medium;
+    font-size: 16px;
     
     
 }
@@ -68,6 +68,19 @@ a {
     font-size: 17px;
     font-weight: bold;
     max-width: fit-content;
+}
+#frase {
+    color: white;
+    font-family:monospace;
+    font-size: 14px;
+    font-weight: bold;
+    max-width: fit-content;
+}
+#about-us {
+    color: white;
+    font-size: 10px;
+    align-items: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 a:hover {
