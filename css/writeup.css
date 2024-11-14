@@ -1,0 +1,53 @@
+body{
+    background-color: black;
+    justify-content: center;
+    min-height: 100vh; 
+    overflow-x: hidden;
+    margin-top: 20px;
+}
+pre{
+    color: green;
+    font-family: monospace;
+}
+span{
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+a {
+    text-decoration: none;
+    color: #58d411;
+    font-size: medium;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 18px;
+    border: black solid 10px;
+    
+}
+a:hover {
+    color: red;
+    text-decoration: underline;
+}
+pre:hover{
+    color: rgb(52, 220, 52);
+    text-decoration: None;
+}
+#span-title {
+    font-size: 17px;
+    font-weight: bold;
+    
+    color: white;
+}
+
+
+
+.botao-grande {
+    display: inline-block;
+    padding: 20px 40px;            /* Aumenta a área clicável */
+    color: white;                  /* Cor do texto */
+    text-decoration: none;         /* Remove sublinhado do link */
+    font-size: 18px;               /* Tamanho da fonte */
+    border-radius: 5px;            /* Bordas arredondadas */
+    text-align: center;            /* Centraliza o texto */
+    cursor: pointer;               /* Cursor de mão ao passar sobre o botão */
+}
