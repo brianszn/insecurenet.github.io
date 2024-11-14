@@ -15,12 +15,21 @@ body {
     overflow-x: hidden;
     margin-top: 20px;
 }
+#body-writeup {
+    background-color: black;
+    display: flex;
+    margin: 0;
+    min-height: 100vh; 
+    overflow-x: hidden;
+    margin-top: 80px;
+}
 span,li,ul {
     color: white;
     font-family:monospace;
     font-size: 17px;
     font-weight: bold;
     max-width: fit-content;
+    text-align: center;
 }
 pre {
     color: red;
@@ -44,6 +53,23 @@ a {
     padding: 3px;
     
 }
+#writeup-pre {
+    text-decoration: none;
+    color: white;
+    font-size: medium;
+    font-family: monospace;
+    border-radius: 5px;
+    padding: 3px;
+    
+}
+#span-writeup {
+    color: white;
+    font-family:monospace;
+    font-size: 17px;
+    font-weight: bold;
+    max-width: fit-content;
+}
+
 a:hover {
     color: red;
     text-decoration: underline;
