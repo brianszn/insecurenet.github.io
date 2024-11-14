@@ -95,13 +95,13 @@
     Ban!
 
 
-    Ok, melhorar só um pouquinho a shell, se precisar de full tty faremos isso.
+    Ok, vamos deixar a shell mais bonitinha.
 
     [Basic tty]: python3 -c 'import os,pty; pty.spawn("/bin/bash")'
 
     Depois de pegar a flag do nosso user, partimos para o root...
 
-    Primeira coisa que fiz foi checar o sudoers com sudo -l
+    Primeira coisa que pensei, procurar arquivos com permissão de sudo, ja que eu era um usuário diferente do www-data.
 
     Vi que o vim podia ser executado com privilégios, então fui até o gtfobins
 
