@@ -3,8 +3,6 @@
     width: 100%; 
     text-align: center; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    
-    
 }
 body {
     background-color: black;
@@ -81,6 +79,12 @@ a {
     font-size: 10px;
     align-items: center;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#nicks {
+    
+    color: #58d411;
+    font-size: 15px;
 }
 
 a:hover {
