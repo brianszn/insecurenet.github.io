@@ -57,9 +57,12 @@
 
 
 
-    Depois de um tempo rodando e ter encontrado diretórios padrões, tinha um em especifico, "/simple" que roda uma aplicação web que faz parte do CMS "CMS Made Simple version 2.2.8", após uma busca no google descobrimos duas vulnerabilidades para esta versão, uma é o CVE CVE-2019-9053 que se trata de um SQLi e o CVE-2019-9055, que é um RCE.
+    Depois de um tempo rodando e ter encontrado diretórios padrões, tinha um em especifico, "/simple" que roda uma aplicação web que faz parte do CMS "CMS Made Simple version 2.2.8", 
+    após uma busca no google descobrimos duas vulnerabilidades para esta versão, uma é o CVE CVE-2019-9053 que se trata de um SQLi e o CVE-2019-9055, que é um RCE.
 
-    Testei o CVE-2019-9055 no metasploit, porém sem suceso... Então eu encontrei um script exploit pronto para o SQLi, o script basicamente faz um bruteforce de payloads para extração de informações do banco de dados, um sqli manual.
+    Testei o CVE-2019-9055 no metasploit, porém sem suceso... 
+    
+    Então eu encontrei um script exploit pronto para o SQLi, o script basicamente faz um bruteforce de payloads para extração de informações do banco de dados, um sqli manual.
 
     Provavelmente se tornou um CVE porque o banco de dados é padrão, caso ele fosse diferente para cada aplicação este exploit não funcionaria.
 
