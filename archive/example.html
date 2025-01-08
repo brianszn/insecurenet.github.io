@@ -4,77 +4,19 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Example</title>
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            body{
-                background-color: black;
-                
-                
-                justify-content: center;
-                min-height: 100vh; 
-                overflow-x: hidden;
-                margin-top: 20px;
-            }
-            pre{
-                color: green;
-                font-family: monospace;
-            }
-            span{
-                font-size: 18px;
-                font-weight: bold;
-                padding-top: 50px;
-            }
-            a {
-                text-decoration: none;
-                color: #58d411;
-                font-size: medium;
-                font-family: monospace;
-                font-weight: bold;
-                font-size: 18px;
-                border: black solid 10px;
-                
-            }
-            a:hover {
-                color: red;
-                text-decoration: underline;
-            }
-            pre:hover{
-                color: rgb(52, 220, 52);
-                text-decoration: None;
-            }
-            #span-title {
-                font-size: 17px;
-                font-weight: bold;
-                
-                color: white;
-            }
 
-
-
-            .botao-grande {
-                display: inline-block;
-                padding: 20px 40px;            /* Aumenta a área clicável */
-                color: white;                  /* Cor do texto */
-                text-decoration: none;         /* Remove sublinhado do link */
-                font-size: 18px;               /* Tamanho da fonte */
-                border-radius: 5px;            /* Bordas arredondadas */
-                text-align: center;            /* Centraliza o texto */
-                cursor: pointer;               /* Cursor de mão ao passar sobre o botão */
-            }
-
-            
-
-           
-
-        </style>
+        <link rel="stylesheet" href="../css/archive.css">
+        
     </head>
     <body>
         <div class="container">
             <li><a href="../index.html" class="botao-grande"><font color="white">< Insecure Net</font> <font color="#58d411">Homepage</font></a></li>
         </div>
 <pre><span id="span-title"></font></span>
-    <span><font color="red">my 'Example' article</font></span><br>
+    <span><font color="red">Problema com multiplas chaves ssh github.</font></span><br>
     
     <font color="white">
             .,ad88888888baa,
@@ -96,32 +38,59 @@
       `V8a,       ,ad8888888888P'  Normand
          ""88888888888888888P"     Veilleux
               """"""""""""
+            </font>
 <br><hr>
 Sumário:
 
-    1 - Introduction
-    2 - Bang!
+    1 - Inicio
+    2 - Inicio da configuração
     3 - End
-
-<hr><br>
-</font>
-
-    1 - Introduction
-
-
-    This is my Introduction to the theme
-
-
-    2 - Bang!
-
-    Apice, i g3t r00t here 
-
-    
-    3 - End
-
-    Final theme
-
-    
 </pre>
+<hr><br>
+
+    <div class="container"><p>
+        <font color="red">1 - Inicio</font><br><br>
+        
+        Bom, este é o primeiro 'Insecure Archive' deste pequeno site, utilizarei uma escrita  um pouco mais informal, esse tem como o objetivo
+        mostrar alguns perrengues que eu passei ao tentar configurar multiplas chaves ssh do github na minha máquina, estou utilizando o subsistema
+        linux no windows 10, conhecido como 'wsl'. Está rodando perfeitamente e funciona todas as ferramentas que eu utilizo sem problemas, mas 
+        não sei se o problema que irão ver acontece em outro local, não tenho como saber isso, apenas criando uma maquina virtual só para fazer este teste,
+        coisa que eu não irei fazer. Enfim, não irei prolongar nenhum tópico, apenas quando tiver mais coisas para falar, então vamos lá.
+        
+    </div>
+
+
+    <div class="container"><p>
+        <font color="red">2 - 1º parte da configuração</font><br><br>
+
+        No terminal digite: ssh-keygen -t rsa -b 4096 -C "seu_email@example.com" <br><br>
+
+        - Quando for solicitado um local para salvar a nova chave, escolha um nome diferente do padrão `~/.ssh/id_rsa`. Por exemplo, você pode salvar como `~/.ssh/id_rsa_nova`. <br><br>
+        - Durante o processo, você será solicitado a fornecer uma senha. Essa etapa é opcional, mas recomendada para maior segurança.<br><br>
+        - Depois que a chave for gerada, adicione a nova chave ao seu agente SSH: eval "$(ssh-agent -s)"<br><br>
+
+        O comando `eval "$(ssh-agent -s)"` é usado para iniciar o agente SSH e configurar o ambiente do shell para usá-lo. Vamos entender melhor: <br><br>
+
+        1. Iniciar o agente SSH**: O `ssh-agent` é um programa que mantém suas chaves SSH carregadas na memória. Isso evita que você tenha que digitar sua senha de chave privada toda vez que usar a chave para se autenticar em um servidor ou repositório remoto.
+        <br><br>
+        2. Configurar o ambiente do shell: O comando `eval "$(ssh-agent -s)"` avalia (executa) a saída do comando `ssh-agent -s`, que retorna as variáveis de ambiente necessárias para o funcionamento do agente SSH. Essas variáveis de ambiente são adicionadas ao seu ambiente de shell atual, permitindo que ele se comunique com o agente SSH recém-iniciado.
+        <br><br>
+        Basicamente, esse comando prepara seu ambiente de trabalho para usar o agente SSH, facilitando o gerenciamento das suas chaves SSH durante a sessão.
+            
+
+
+   
+        
+    </div>
+
+
+    <div class="container"><p>
+        <font color="red">3 - 1º parte da configuração</font><br><br>
+        
+    </div>
+
+
+
+
     </body>
 </html>

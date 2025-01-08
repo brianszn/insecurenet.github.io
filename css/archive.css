@@ -1,0 +1,97 @@
+body{
+    background-color: black;
+    justify-content: center;
+    min-height: 100vh; 
+    overflow-x: hidden;
+    margin-top: 20px;
+    
+    
+}
+
+pre{
+    color: green;
+    font-family: monospace;
+    
+}
+
+span{
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+a {
+    text-decoration: none;
+    color: #58d411;
+    font-size: medium;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 18px;
+    border: black solid 10px;
+    
+}
+
+a:hover {
+    color: red;
+    text-decoration: underline;
+}
+
+pre:hover{
+    color: rgb(52, 220, 52);
+    text-decoration: None;
+    
+}
+
+#span-title {
+    font-size: 17px;
+    font-weight: bold;
+    
+    color: white;
+    
+}
+
+#teste {
+
+     /* Centraliza o conteúdo */
+    text-align: justify; /* Justifica o texto */
+    padding: 20px;
+    width: 60%;
+    margin-right: 50px;
+
+}
+
+
+
+.botao-grande {
+    display: inline-block;
+    padding: 20px 40px;            /* Aumenta a área clicável */
+    color: white;                  /* Cor do texto */
+    text-decoration: none;         /* Remove sublinhado do link */
+    font-size: 18px;               /* Tamanho da fonte */
+    border-radius: 5px;            /* Bordas arredondadas */
+    text-align: center;            /* Centraliza o texto */
+    cursor: pointer;               /* Cursor de mão ao passar sobre o botão */
+    
+}
+
+
+
+
+
+
+
+.container {
+    width: 60%; /* Define uma largura limitada para o bloco de texto */
+    max-width: 800px; /* Limita a largura máxima para telas maiores */
+    padding: 20px; /* Adiciona espaçamento interno */
+    text-align: justify; /* Justifica o texto */
+    overflow-wrap: break-word; /* Garante que palavras muito longas quebrem */
+    font-family: monospace;
+}
+
+/* Conteúdo interno */
+p {
+    font-size: 13px; /* Tamanho da fonte */
+    line-height: 1.6; /* Espaçamento entre linhas */
+    color: rgb(52, 220, 52); /* Cor do texto */
+}

